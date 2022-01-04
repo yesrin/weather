@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, useEffect, FormEvent } from "react";
 import "./App.css";
 import { Weather } from "./weather";
 
@@ -27,12 +27,18 @@ const App: React.FC = () => {
     setCity(event.target.value);
   };
 
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault(); //폼의 submit 버튼의 기본 동작(새로고침) 차단
+    getWeather(city);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input type="text" placeholder="Enter city" onChange={handleChange} />
         <button type="submit">Get weather</button>
         <h2>City:{city}</h2>
+        {weather && <h2>날씨:{weather.temp}F</h2>}
       </form>
     </div>
   );
